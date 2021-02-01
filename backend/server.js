@@ -25,7 +25,7 @@ router(app);
 
 app.use('/app', express.static('public'));
 
-const port = 3000;
+const port = 3001;
 
 server.listen(port, function () {
   console.log('La aplicación está escuchando en el puerto '+ port);
