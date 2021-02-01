@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-function getUserId(state, id)  {
+function getUserId(state, id) {
   let ret = null;
 
   if (state.list) {
@@ -17,32 +17,35 @@ function getUserId(state, id)  {
 // Inital state
 const initialState = {
   list: [],
-  selected: {},
+  selected: {}
 };
 
 // Getters
 const getters = {
-  getUserId: state => (id) => {
+  getUserId: state => id => {
     return getUserId(state, id);
-  },
+  }
 };
 
 // Actions
 const actions = {
   getUsers({ commit }) {
-    axios.get(`${process.env.VUE_APP_API}/user`)
-      .then((response) => {
+    axios
+      .get(`${process.env.VUE_APP_API}/user`)
+      .then(response => {
+        console.log(response);
         const UserList = response.data.body;
+
         console.log(UserList);
-        commit('setUsers', UserList);
+        commit("setUsers", UserList);
       })
-      .catch((err) => {
-        console.error('Unable to get User list', err);
+      .catch(err => {
+        console.error("Unable to get User list", err);
       });
   },
-  selectUser({commit}, data) {
+  selectUser({ commit }, data) {
     // axios.post(...);
-    commit('selectUser', data);
+    commit("selectUser", data);
   }
 };
 
@@ -52,7 +55,7 @@ const mutations = {
     state.list = data;
   },
   selectUser(state, data) {
-    console.log('Commiting in...');
+    console.log("Commiting in...");
     console.log(data);
     state.selected = data;
   },
@@ -60,9 +63,8 @@ const mutations = {
     let index = getUserId(state, data.User);
     state.list[index].messages.push(data.message);
     state.list[index].message = data.message;
-  },
+  }
 };
-
 
 // Export store
 export default {
@@ -70,5 +72,5 @@ export default {
   actions,
   mutations,
   state: initialState,
-  namespaced: true,
+  namespaced: true
 };
